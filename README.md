@@ -39,3 +39,8 @@ python train.py --dpath data/drivelog.csv --epoch 8 --mpath model/ --restore
 
 ##3. Model Building
 ###3.1 Approach Outline
+###3.2 Data Generation & Preprocessing
+###3.3 Model Architecture
+###3.5 Traning
+###3.6 Simulation
+##4 Conclution
