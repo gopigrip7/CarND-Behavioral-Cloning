@@ -10,9 +10,9 @@ The Project is the third in Udacity SelfDriving CarND. The goal is to clone the 
 - Pandas
 - OpenCV3
 
-###1.2 Drive the simulator with Autonumus mode
+###1.2 Drive the simulator with Autonumus mod
+e
 Start the simulator in an autonumus mode and run the following command in terminal
-```
-cmd
+```cmd
 python drive.py model/model.json
 ```
