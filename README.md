@@ -1,6 +1,6 @@
 # CarND-Behavioral-Cloning
 ## Project Overview
-For this project, a reviewer will be testing the model that you generated on the first test track (the one to the left in the track selection options).
+The Project is the third in Udacity SelfDriving CarND. The goal is to clone the human car driving behavior using DeepLearning Technique and replay it to drive (Only Steering) the car autonomously. For this Udacity has provided Simulator for recording the human driving behavior and an autonomous option to drive using the cloned behavior using deepLeanring.
 
 Whether you decide to zip up your submission or submit a GitHub repo, please follow the naming conventions below to make it easy for reviewers to find the right files:
 
