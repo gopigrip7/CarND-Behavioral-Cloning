@@ -25,3 +25,7 @@ python train.py --dpath data/drivelog.csv --epoch 8 --mpath model/
 ```cmd
 python train.py --dpath data/drivelog.csv --epoch 8 --mpath model/ --restore
 ```
+##2 Code Organization
+- `dataPath` : Data folder for drivelog.csv containing center,right and left camera image, speed, throttle, steering etc.
+- `dataPath\IMG` : All the center, right and left images correspoding to filenames in drivelog.csv
+- `modePath` : Folder containing saved models
