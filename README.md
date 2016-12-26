@@ -54,7 +54,7 @@ Most of the the training data is straight (0 degree steering angle) from the tra
 - Reduce image size to 64 X 64 speed up traning
 - Threshold based randomization of choosing image of straight drive, this will reduce the overfitting of straight drive
 
-The program uses a Keras fit_generator which actually can run the python generator(using Yeild) in separate thread. And on the case of entire processed and additional agumented data not fitting in memory, generator comes handy. The generator reads only images need for that batch and appy image pre-processing and agumention, creating a the data only for that batch in memory. Its then pass this to fit_generator for training. Most of the augumentation is randomized and generator itself programmed to provide data continuouly, hence generator feeds data for training infinitley but very different set each time.
+The program uses a Keras fit_generator which actually can run the python generator(using Yield) in a separate thread if increase performance and memory efficient where entire processed/augmented data don't fit in the memory. The generator reads only images need for that batch and applies image pre-processing and argumentation creating a data only for that batch. It then passes this to fit_generator for training. Most of the augmentation is randomized, and the generator itself programmed to provide data continuously. Hence generator feeds data for training infinitely but very different set each time taking care of the overfitting.
 
 
 ###3.3 Model Architecture
