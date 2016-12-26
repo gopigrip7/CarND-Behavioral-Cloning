@@ -39,8 +39,25 @@ python train.py --dpath data/drivelog.csv --epoch 8 --mpath model/ --restore
 
 ##3. Model Building
 ###3.1 Approach Outline
+I researched couple of models for autonumus steering prediction based on the visual image of the front facing camera
+- Nvidia Paper based model
+- Model purposed by Vivek in his blog
+- Modified version of LeNet model
+- VGG16 based model
+
 ###3.2 Data Generation & Preprocessing
+Most of the the training data is straight (0 degree steering angle) from the track hence the model was overfitting for for 0 degree and driving straight even in turns. By using concepts and ideas from Vivek blog, following agumentation techniques are used
+- Left and Right Camera images are used in random. The steering angles are adjusted based on the left and right camera. This give nice recovery simulation when car drift towards either of the sides
+- Increase or Decrease Brightness to simulate Shadow, day and night
+- Flip the center image and the negate the steering to simulate left and right turns
+- Cut the image from Horixzon to top providing only bottom half for faster converting 
+- Reduce image size to 64 X 64 speed up traning
+- Threshold based randomization of choosing image of straight drive, this will reduce the overfitting of straight drive
+
+The program uses a Keras fit_generator which actually can run the python generator(using Yeild) in separate thread. And on the case of entire processed and additional agumented data not fitting in memory, generator comes handy. The generator reads only images need for that batch and appy image pre-processing and agumention, creating a the data only for that batch in memory. Its then pass this to fit_generator for training. Most of the augumentation is randomized and generator itself programmed to provide data continuouly, hence generator feeds data for training infinitley but very different set each time.
+
+
 ###3.3 Model Architecture
 ###3.5 Traning
 ###3.6 Simulation
-##4 Conclution
+##4. Conclution
