@@ -43,6 +43,7 @@ I researched couple of models for autonumus steering prediction based on the vis
 - Nvidia Paper based model
 - Model purposed by Vivek in his blog
 - Modified version of LeNet model
+The problem is to get continuous ouput which is different from the classifer, this problem should be considered as Regresstion. 
 
 ###3.2 Data Generation & Preprocessing
 Most of the the training data is straight (0 degree steering angle) from the track hence the model was overfitting for for 0 degree and driving straight even in turns. By using concepts and ideas from Vivek blog, following agumentation techniques are used
@@ -57,6 +58,11 @@ The program uses a Keras fit_generator which actually can run the python generat
 
 ###3.3 Model Architecture
 As briefied in apporach outline, after trying out various models implemented Vivek's model which gave good performace. Below is the summary of the Model Architecture from Keras.Summary().
+
+Model uses Lambda layer to do in model nomalization( moving the 0 255 color space to 0 to 1. Instead of gray scale or any color channel, the model first convolution layer 3 channel depth will make best color feature space based on the training data. The first color channel is followed by  3 more layers of convolution with channel 32, 64, 64, 64 and the kernel 3x3. each of the convolution followed by 2x2 maxpooling. Followed by Flatten and Dense layer of 512, 64, 16 and 1. As stated above predicting steering wheel from image is regression problem to continuously predict a steering from the given image, hence the last dense layer is 1 without any activation or softmax layer.
+
+Leaky ReLUs allow a small, non-zero gradient when the unit is not active thus providing smooth steering angle between images.
+
 <div class="output_wrapper"><div class="out_prompt_overlay prompt" title="click to unscroll output; double click to hide" style="display: block;"></div><div class="output output_scroll" style="display: flex;"><div class="output_area"><div class="prompt"></div><div class="output_subarea output_text output_stream output_stdout"><pre>____________________________________________________________________________________________________
 Layer (type)                     Output Shape          Param #     Connected to                     
 ====================================================================================================
@@ -114,7 +120,7 @@ dense_4 (Dense)                  (None, 1)             17          dropout_6[0][
 ====================================================================================================
 Total params: 2187885
 ____________________________________________________________________________________________________
-</pre></div></div></div><div class="btn btn-default output_collapsed" title="click to expand output" style="display: none;">. . .</div></div>
+</pre></div></div></div><div class="btn btn-default output_collapsed" title="click to expand output" style="display: none;"></div></div>
 ###3.5 Training
 ###3.6 Simulation
 ##4. Conclution
