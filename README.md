@@ -59,7 +59,8 @@ The program uses a Keras fit_generator which actually can run the python generat
 As briefied in apporach outline, after trying out various models implemented Vivek's model which gave good performace. Below is the summary of the Model Architecture from Keras.Summary.
 
 ____________________________________________________________________________________________________
-Layer (type)                     Output Shape          Param #     Connected to                     
+Layer (type)                     Output Shape          Param #     Connected to   
+____________________________________________________________________________________________________
 ====================================================================================================
 lambda_1 (Lambda)                (None, 64, 64, 3)     0           lambda_input_1[0][0]             
 ____________________________________________________________________________________________________
