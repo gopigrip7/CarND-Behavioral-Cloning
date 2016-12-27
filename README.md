@@ -135,3 +135,7 @@ The entire model training takes around 6 to 8 mins. Both the model architecture 
 ###3.6 Simulation
 The drive.py which exports the model and drives in autonomus mode uses the same preprocessing and image pipeline before feeding the image into prediction function. The result of predicted steering angle is divide by 1.25; this provides best smooth turns without crossing the lines. The throttle set to 0.2, any increase in throttle the car drives out of the safety zone.
 ##4. Conclution
+Thought the project goal is met, it is far from over. Nvidia model or the method I implmented from vivek's blog all consider image and steering prediction as discrent problem rather than a continuos problem in action domain. Example like catching a blow thrown. The ultimate autonimus can only be achived when these problems are consider in action domain, second in failure of camera or any interption , model would have already predict to extent the steering values to drive to safety.
+Hence this problem needs to be approached using RNN  concept as continuous prediction. The 1st among the Challenge 1 used RNN which would be right path, but I am yet explore the same.
+
+
