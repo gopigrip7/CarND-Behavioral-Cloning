@@ -13,7 +13,7 @@ The Project is the third in Udacity SelfDriving CarND. The goal is to clone the 
 ###1.2 Self Drive in Autonomus mode
 Start the simulator in an autonumus mode and run the following command in terminal
 ```cmd
-python drive.py model/model.json
+python drive.py models/model.json
 ```
 ###1.3 Training the model
 The model can be tranined from scratch or from previsouly trained model
@@ -23,7 +23,7 @@ python train.py --dpath data/drivelog.csv --epoch 8 --mpath model/
 ```
 - Training already tranined model
 ```cmd
-python train.py --dpath data/drivelog.csv --epoch 8 --mpath model/ --restore
+python train.py --dpath data/drivelog.csv --epoch 8 --mpath model/modelv1.json --restore
 ```
 ##2. Code Organization
 - `dataPath` : Data folder for tranining data
