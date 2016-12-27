@@ -47,12 +47,12 @@ I researched couple of models for autonumus steering prediction based on the vis
 
 ###3.2 Data Generation & Preprocessing
 Most of the the training data is straight (0 degree steering angle) from the track hence the model was overfitting for for 0 degree and driving straight even in turns. By using concepts and ideas from Vivek blog, following agumentation techniques are used
-- Left and Right Camera images are used in random. The steering angles are adjusted based on the left and right camera. This give nice recovery simulation when car drift towards either of the sides
+- Left and Right Camera images used in random. The steering angles are adjusted based on the left and right camera. This give nice recovery simulation when car drift towards either of the sides
 - Increase or Decrease Brightness to simulate Shadow, day and night
-- Flip the center image and the negate the steering to simulate left and right turns
+- Flip the center image and negate the steering to simulate left and right turns
 - Cut the image from Horixzon to top providing only bottom half for faster converting 
 - Reduce image size to 64 X 64 speed up traning
-- Threshold based randomization of choosing image of straight drive, this will reduce the overfitting of straight drive
+- Threshold based randomization of choosing image of straight drive, this will minimize the overfitting of straight drive
 
 The program uses a Keras fit_generator which actually can run the python generator(using Yield) in a separate thread if increase performance and memory efficient where entire processed/augmented data don't fit in the memory. The generator reads only images need for that batch and applies image pre-processing and argumentation creating a data only for that batch. It then passes this to fit_generator for training. Most of the augmentation is randomized, and the generator itself programmed to provide data continuously. Hence generator feeds data for training infinitely but very different set each time taking care of the overfitting.
 
