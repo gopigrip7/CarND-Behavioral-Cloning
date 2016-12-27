@@ -17,7 +17,7 @@ python drive.py models/model.json
 ```
 ###1.3 Training the model
 The model can be tranined from scratch or from previsouly trained model
-- Training from Scratch
+- Training from Scratch. New model.json and model.hf5 will created. Any previous model.json/hf5 will be overwritten.
 ```cmd
 python train.py --dpath data/drivelog.csv --epoch 8 --mpath model/
 ```
