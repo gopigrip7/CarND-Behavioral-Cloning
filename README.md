@@ -43,7 +43,6 @@ I researched couple of models for autonumus steering prediction based on the vis
 - Nvidia Paper based model
 - Model purposed by Vivek in his blog
 - Modified version of LeNet model
-- VGG16 based model
 
 ###3.2 Data Generation & Preprocessing
 Most of the the training data is straight (0 degree steering angle) from the track hence the model was overfitting for for 0 degree and driving straight even in turns. By using concepts and ideas from Vivek blog, following agumentation techniques are used
@@ -56,8 +55,66 @@ Most of the the training data is straight (0 degree steering angle) from the tra
 
 The program uses a Keras fit_generator which actually can run the python generator(using Yield) in a separate thread if increase performance and memory efficient where entire processed/augmented data don't fit in the memory. The generator reads only images need for that batch and applies image pre-processing and argumentation creating a data only for that batch. It then passes this to fit_generator for training. Most of the augmentation is randomized, and the generator itself programmed to provide data continuously. Hence generator feeds data for training infinitely but very different set each time taking care of the overfitting.
 
-
 ###3.3 Model Architecture
-###3.5 Traning
+As briefied in apporach outline, after trying out various models implemented Vivek's model which gave good performace. Below is the summary of the Model Architecture from Keras.Summary.
+
+____________________________________________________________________________________________________
+Layer (type)                     Output Shape          Param #     Connected to                     
+====================================================================================================
+lambda_1 (Lambda)                (None, 64, 64, 3)     0           lambda_input_1[0][0]             
+____________________________________________________________________________________________________
+convolution2d_1 (Convolution2D)  (None, 64, 64, 3)     12          lambda_1[0][0]                   
+____________________________________________________________________________________________________
+leakyrelu_1 (LeakyReLU)          (None, 64, 64, 3)     0           convolution2d_1[0][0]            
+____________________________________________________________________________________________________
+convolution2d_2 (Convolution2D)  (None, 64, 64, 32)    896         leakyrelu_1[0][0]                
+____________________________________________________________________________________________________
+leakyrelu_2 (LeakyReLU)          (None, 64, 64, 32)    0           convolution2d_2[0][0]            
+____________________________________________________________________________________________________
+maxpooling2d_1 (MaxPooling2D)    (None, 32, 32, 32)    0           leakyrelu_2[0][0]                
+____________________________________________________________________________________________________
+dropout_1 (Dropout)              (None, 32, 32, 32)    0           maxpooling2d_1[0][0]             
+____________________________________________________________________________________________________
+convolution2d_3 (Convolution2D)  (None, 32, 32, 64)    18496       dropout_1[0][0]                  
+____________________________________________________________________________________________________
+leakyrelu_3 (LeakyReLU)          (None, 32, 32, 64)    0           convolution2d_3[0][0]            
+____________________________________________________________________________________________________
+maxpooling2d_2 (MaxPooling2D)    (None, 16, 16, 64)    0           leakyrelu_3[0][0]                
+____________________________________________________________________________________________________
+dropout_2 (Dropout)              (None, 16, 16, 64)    0           maxpooling2d_2[0][0]             
+____________________________________________________________________________________________________
+convolution2d_4 (Convolution2D)  (None, 16, 16, 64)    36928       dropout_2[0][0]                  
+____________________________________________________________________________________________________
+leakyrelu_4 (LeakyReLU)          (None, 16, 16, 64)    0           convolution2d_4[0][0]            
+____________________________________________________________________________________________________
+maxpooling2d_3 (MaxPooling2D)    (None, 8, 8, 64)      0           leakyrelu_4[0][0]                
+____________________________________________________________________________________________________
+dropout_3 (Dropout)              (None, 8, 8, 64)      0           maxpooling2d_3[0][0]             
+____________________________________________________________________________________________________
+flatten_1 (Flatten)              (None, 4096)          0           dropout_3[0][0]                  
+____________________________________________________________________________________________________
+dense_1 (Dense)                  (None, 512)           2097664     flatten_1[0][0]                  
+____________________________________________________________________________________________________
+leakyrelu_5 (LeakyReLU)          (None, 512)           0           dense_1[0][0]                    
+____________________________________________________________________________________________________
+dropout_4 (Dropout)              (None, 512)           0           leakyrelu_5[0][0]                
+____________________________________________________________________________________________________
+dense_2 (Dense)                  (None, 64)            32832       dropout_4[0][0]                  
+____________________________________________________________________________________________________
+leakyrelu_6 (LeakyReLU)          (None, 64)            0           dense_2[0][0]                    
+____________________________________________________________________________________________________
+dropout_5 (Dropout)              (None, 64)            0           leakyrelu_6[0][0]                
+____________________________________________________________________________________________________
+dense_3 (Dense)                  (None, 16)            1040        dropout_5[0][0]                  
+____________________________________________________________________________________________________
+leakyrelu_7 (LeakyReLU)          (None, 16)            0           dense_3[0][0]                    
+____________________________________________________________________________________________________
+dropout_6 (Dropout)              (None, 16)            0           leakyrelu_7[0][0]                
+____________________________________________________________________________________________________
+dense_4 (Dense)                  (None, 1)             17          dropout_6[0][0]                  
+====================================================================================================
+Total params: 2187885
+
+###3.5 Training
 ###3.6 Simulation
 ##4. Conclution
