@@ -56,11 +56,9 @@ Most of the the training data is straight (0 degree steering angle) from the tra
 The program uses a Keras fit_generator which actually can run the python generator(using Yield) in a separate thread if increase performance and memory efficient where entire processed/augmented data don't fit in the memory. The generator reads only images need for that batch and applies image pre-processing and argumentation creating a data only for that batch. It then passes this to fit_generator for training. Most of the augmentation is randomized, and the generator itself programmed to provide data continuously. Hence generator feeds data for training infinitely but very different set each time taking care of the overfitting.
 
 ###3.3 Model Architecture
-As briefied in apporach outline, after trying out various models implemented Vivek's model which gave good performace. Below is the summary of the Model Architecture from Keras.Summary.
-
-____________________________________________________________________________________________________
-Layer (type)                     Output Shape          Param #     Connected to   
-____________________________________________________________________________________________________
+As briefied in apporach outline, after trying out various models implemented Vivek's model which gave good performace. Below is the summary of the Model Architecture from Keras.Summary().
+<div class="output_wrapper"><div class="out_prompt_overlay prompt" title="click to unscroll output; double click to hide" style="display: block;"></div><div class="output output_scroll" style="display: flex;"><div class="output_area"><div class="prompt"></div><div class="output_subarea output_text output_stream output_stdout"><pre>____________________________________________________________________________________________________
+Layer (type)                     Output Shape          Param #     Connected to                     
 ====================================================================================================
 lambda_1 (Lambda)                (None, 64, 64, 3)     0           lambda_input_1[0][0]             
 ____________________________________________________________________________________________________
@@ -112,11 +110,11 @@ leakyrelu_7 (LeakyReLU)          (None, 16)            0           dense_3[0][0]
 ____________________________________________________________________________________________________
 dropout_6 (Dropout)              (None, 16)            0           leakyrelu_7[0][0]                
 ____________________________________________________________________________________________________
-dense_4 (Dense)                  (None, 1)             17          dropout_6[0][0]  
-____________________________________________________________________________________________________
+dense_4 (Dense)                  (None, 1)             17          dropout_6[0][0]                  
 ====================================================================================================
 Total params: 2187885
-
+____________________________________________________________________________________________________
+</pre></div></div></div><div class="btn btn-default output_collapsed" title="click to expand output" style="display: none;">. . .</div></div>
 ###3.5 Training
 ###3.6 Simulation
 ##4. Conclution
