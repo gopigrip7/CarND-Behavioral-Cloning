@@ -122,20 +122,20 @@ Total params: 2187885
 ____________________________________________________________________________________________________
 </pre></div></div></div><div class="btn btn-default output_collapsed" title="click to expand output" style="display: none;"></div></div>
 ###3.5 Training
-The Training uses Adam optimiser with default parameters which work best. Considering the regression output explained above, MSE loss (Mean Square root) function employed in the training process. Any epoch greater than 8 the model seems to overfit and mostly drives straight, the assumptions is due to the nature of prediction problem and images. 
+The Training uses Adam optimiser with default parameters which work best. Considering the regression output explained above, MSE loss (Mean Square root) function employed in the training process. Any epoch greater than eight the model seems to overfit and mostly drives straight, the assumptions are due to the nature of prediction problem and images. 
 
-Dropout of 0.5 is used to regularise and avoid overfitting, this drops the weight in random by half there by reduce overfitting and also allow other neuron to learn the feature.
+Dropout of 0.5 is used to regularize and avoid overfitting; this drops the weight in random by half thereby reduce overfitting and also allow other neurons to learn the feature.
 
-The model was run with batch size of 250 and samples_per_epoch 20000.
+The model run with a batch size of 250 and samples_per_epoch 20000.
 
-The test, validation and train split is 10:10:80 and model uses the same generator to perform the validation. The validation loss decrease around 8 and increase after that due to nature of the problem. Thought testing dataset was used but it doesn't seem to provide valid test, and hence the testing was actually done in the autonomous mode
+The test, validation and train split is 10:10:80 and model use the same generator to perform the validation. The validation loss decreases around 8 and increases after that due to nature of the problem. Thought testing dataset used but it doesn't seem to provide valid test, and hence the testing was done in the autonomous mode
 
-The entire model training takes around 6 to 8 mins. Both the model architecture and model weights are stored in model folder provided in the command line or default in the current folder.
+The entire model training takes around 6 to 8 mins. Both the model architecture and model weights stored in the model folder provided in the command line or default in the current folder.
 
 ###3.6 Simulation
-The drive.py which exports the model and drives in autonomus mode uses the same preprocessing and image pipeline before feeding the image into prediction function. The result of predicted steering angle is divide by 1.25; this provides best smooth turns without crossing the lines. The throttle set to 0.2, any increase in throttle the car drives out of the safety zone.
+The drive.py which exports the model and drives in autonomous mode uses the same preprocessing and image pipeline before feeding the image into prediction function. The result of predicted steering angle is divide by 1.25; this provides best smooth turns without crossing the lines. The throttle set to 0.2, any increase in throttle the car drives out of the safety zone.
 ##4. Conclution
-Thought the project goal is met, it is far from over. Nvidia model or the method I implmented from vivek's blog all consider image and steering prediction as discrent problem rather than a continuos problem in action domain. Example like catching a blow thrown. The ultimate autonimus can only be achived when these problems are consider in action domain, second in failure of camera or any interption , model would have already predict to extent the steering values to drive to safety.
-Hence this problem needs to be approached using RNN  concept as continuous prediction. The 1st among the Challenge 1 used RNN which would be right path, but I am yet explore the same.
+Though the project goal met, it is far from over. Nvidia model or the method I implemented from Vivek's blog all consider image and steering prediction as a discrent problem rather than a continuous problem in action domain. Example like catching a blow thrown. The ultimate autonomy can only be achieved when these problems considered in action domain, second in a failure of the camera or any interruption, model would have already predicted to an extent the steering values to drive to safety.
+Hence this problem needs to be approached using RNN  concept as a continuous prediction. The 1st among the Challenge 1 used RNN which would be the right path, but I am yet exploring the same.
 
 
