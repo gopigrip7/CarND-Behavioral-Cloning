@@ -39,29 +39,29 @@ python train.py --dpath data/drivelog.csv --epoch 8 --mpath model/modelv1.json -
 
 ##3. Model Building
 ###3.1 Approach Outline
-I researched couple of models for autonumus steering prediction based on the visual image of the front facing camera
+I researched couple of models for autonomous steering prediction based on the visual image of the front facing camera
 - Nvidia Paper based model
 - Model purposed by Vivek in his blog
 - Modified version of LeNet model
-The problem is to get continuous ouput which is different from the classifer, this problem should be considered as Regresstion. 
+The problem is to get continuous output which is different from the classifier; hence should be considered as Regression. 
 
 ###3.2 Data Generation & Preprocessing
-Most of the the training data is straight (0 degree steering angle) from the track hence the model was overfitting for for 0 degree and driving straight even in turns. By using concepts and ideas from Vivek blog, following agumentation techniques are used
-- Left and Right Camera images used in random. The steering angles are adjusted based on the left and right camera. This give nice recovery simulation when car drift towards either of the sides
+Most of the training data is straight (0-degree steering angle) on the track hence the model was overfitting for 0 degrees and driving straight even in turns. By using concepts and ideas from Vivek blog, following augmentation techniques are used
+- Left and Right Camera images used in random. The steering angles are adjusted based on the left and right camera. This gives excellent recovery simulation when car drift towards either of the sides
 - Increase or Decrease Brightness to simulate Shadow, day and night
 - Flip the center image and negate the steering to simulate left and right turns
-- Cut the image from Horixzon to top providing only bottom half for faster converting 
-- Reduce image size to 64 X 64 speed up traning
-- Threshold based randomization of choosing image of straight drive, this will minimize the overfitting of straight drive
+- Cut the image from Horizon to top providing only bottom half for faster converting 
+- Reduce image size to 64 X 64 speed up training
+- Threshold-based randomization of choosing image of straight drive, this will minimize the overfitting of straight drive
 
 The program uses a Keras fit_generator which actually can run the python generator(using Yield) in a separate thread if increase performance and memory efficient where entire processed/augmented data don't fit in the memory. The generator reads only images need for that batch and applies image pre-processing and argumentation creating a data only for that batch. It then passes this to fit_generator for training. Most of the augmentation is randomized, and the generator itself programmed to provide data continuously. Hence generator feeds data for training infinitely but very different set each time taking care of the overfitting.
 
 ###3.3 Model Architecture
-As briefied in apporach outline, after trying out various models implemented Vivek's model which gave good performace. Below is the summary of the Model Architecture from Keras.Summary().
+As briefed in approach outline, after trying out various models implemented Vivek's model which gave a good performance. Below is the summary of the Model Architecture from Keras.Summary().
 
-Model uses Lambda layer to do in model nomalization( moving the 0 255 color space to 0 to 1. Instead of gray scale or any color channel, the model first convolution layer 3 channel depth will make best color feature space based on the training data. The first color channel is followed by  3 more layers of convolution with channel 32, 64, 64, 64 and the kernel 3x3. each of the convolution followed by 2x2 maxpooling. Followed by Flatten and Dense layer of 512, 64, 16 and 1. As stated above predicting steering wheel from image is regression problem to continuously predict a steering from the given image, hence the last dense layer is 1 without any activation or softmax layer.
+Model uses Lambda layer to do in model normalization( moving the 0 255 color space to 0 to 1. Instead of gray scale or any color channel, the model first convolution layer three channel depth will make best color feature space based on the training data. The first color channel followed by three more layers of convolution with channel 32, 64, 64, 64 and the kernel 3x3. Each of the convolution followed by 2x2 max pooling. Followed by Flatten and Dense layer of 512, 64, 16 and 1. As stated above predicting steering wheel from the image is regression problem to continuously predict a steering from the given image, hence the last dense layer is one without any activation or softmax layer.
 
-Leaky ReLUs allow a small, non-zero gradient when the unit is not active thus providing smooth steering angle between images.
+Leaky ReLUs allow a small, non-zero gradient when the unit is not active thus providing a smooth steering angle between images.
 
 <div class="output_wrapper"><div class="out_prompt_overlay prompt" title="click to unscroll output; double click to hide" style="display: block;"></div><div class="output output_scroll" style="display: flex;"><div class="output_area"><div class="prompt"></div><div class="output_subarea output_text output_stream output_stdout"><pre>____________________________________________________________________________________________________
 Layer (type)                     Output Shape          Param #     Connected to                     
