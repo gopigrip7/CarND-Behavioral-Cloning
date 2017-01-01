@@ -26,10 +26,10 @@ python train.py --dpath data/drivelog.csv --epoch 8 --mpath model/
 python train.py --dpath data/drivelog.csv --epoch 8 --mpath model/modelv1.json --restore
 ```
 ##2. Code Organization
-- `dataPath` : Data folder for tranining data
-- `dataPath\drivelog.csv` : drivelog.csv containing center,right and left camera image, speed, throttle, steering etc.
-- `dataPath\IMG` : All the center, right and left images correspoding to filenames in drivelog.csv
-- `modePath` : Folder containing saved models
+- `data` : Data folder for tranining data
+- `data\drivelog.csv` : drivelog.csv containing center,right and left camera image, speed, throttle, steering etc.
+- `data\IMG` : All the center, right and left images correspoding to filenames in drivelog.csv
+- `model` : Folder containing trainded saved models weight and model json
 - `model.py` : Keras CNN models for Self Driving
 - `generator.py` : Generator and augmentation engine
 - `train.py` : Python program to train the choosen model
