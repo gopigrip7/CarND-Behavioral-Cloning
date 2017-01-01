@@ -21,11 +21,11 @@ def parseCommand():
     # parse command line parameters
     parser = argparse.ArgumentParser()
     parser.add_argument("--dPath", dest="data_path", default="data",action="store") 
-    parser.add_argument("--mPath", dest="model_path", default="models",action="store")
+    parser.add_argument("--mPath", dest="model_path", default="model",action="store")
     parser.add_argument("--restore", dest="restore", default = False,action="store_true")
     parser.add_argument("--nb_epoch", dest="nb_epoch", default = 8, type=int)
     parser.add_argument("--model",default="custModel",choices=["nvidiaModel","custModel"],action="store")
-    parser.add_argument("--rModel",dest="restore_model",default="models/model.json",action="store")
+    parser.add_argument("--rModel",dest="restore_model",default="model/model.json",action="store")
     parser.add_argument("--oModel",dest="output_model",default="model",action="store")
     args = parser.parse_args()
     return args
