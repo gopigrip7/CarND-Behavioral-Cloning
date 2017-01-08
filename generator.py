@@ -1,10 +1,11 @@
 import cv2
 import numpy as np
 import pandas as pd
+
 import math
 
 class Generator:
-    def __init__(self,input_shape,data_path,batch_size=250):
+    def __init__(self,input_shape,data_path,batch_size=250,validator=True):
         self.new_size_col,self.new_size_row,self.ch = input_shape
         driveLog_fname = "{}/driving_log.csv".format(data_path)
         self.image_fdir = data_path
@@ -12,7 +13,10 @@ class Generator:
         self._threshold = 1
         print("Init")
         self.drivelog = pd.read_csv(driveLog_fname)#,names=["center","left","right","steering","throttle","brake","speed"])
-
+        mask = np.random.rand(len(self.drivelog)) < 0.8
+        self.train = self.drivelog[mask]
+        self.valid =self.drivelog[~mask]
+        
     @property    
     def threshold(self):
         return self._threshold
@@ -81,8 +85,12 @@ class Generator:
 
         return image,y_steer
 
-    def generate_data(self):
-        data = self.drivelog
+    def generate_data(self,valid=False):
+        if not valid:
+            data = self.train
+        else:
+            data = self.valid
+        #data = self.drivelog
         batch_size = self.batch_size
         batch_images = np.zeros((batch_size, self.new_size_row, self.new_size_col, 3))
         batch_steering = np.zeros(batch_size)
