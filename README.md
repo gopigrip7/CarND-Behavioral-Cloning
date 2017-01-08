@@ -122,11 +122,17 @@ ________________________________________________________________________________
 ###3.5 Training
 The Training uses Adam optimiser with default parameters which work best. Considering the regression output explained above, MSE loss (Mean Square root) function employed in the training process. Any epoch greater than eight the model seems to overfit and mostly drives straight, the assumptions are due to the nature of prediction problem and images. 
 
+Below graph show train vs Validation loss and clear of 8 epoch the model doesn't have any significat gain and testing the models in simulator show any epoch above 8 doesnt improve or overfit.
+
+![alt tag](Train_val_loss.jpeg)
+
+One point to note is, the train loss saturate around 0.03 but not getting overfit, this is because the generator always get random images and model sees new, hence the case.
+
 Dropout of 0.5 is used to regularize and avoid overfitting; this drops the weight in random by half thereby reduce overfitting and also allow other neurons to learn the feature.
 
 The model run with a batch size of 250 and samples_per_epoch 20000.
 
-The test, validation and train split is 10:10:80 and model use the same generator to perform the validation. The validation loss decreases around 8 and increases after that due to nature of the problem. Thought testing dataset used but it doesn't seem to provide valid test, and hence the testing was done in the autonomous mode
+The  validation and train split is 20:80 and model use the same generator to perform the validation. The validation loss decreases around 8 and increases after that due to nature of the problem. Thought testing dataset used but it doesn't seem to provide valid test, and hence the testing was done in the autonomous mode
 
 The entire model training takes around 6 to 8 mins. Both the model architecture and model weights stored in the model folder provided in the command line or default in the current folder.
 
