@@ -12,6 +12,7 @@ from sklearn.model_selection import train_test_split
 import scipy
 import cv2
 import re
+import csv
 
 from model import Model
 
@@ -21,11 +22,11 @@ def parseCommand():
     # parse command line parameters
     parser = argparse.ArgumentParser()
     parser.add_argument("--dPath", dest="data_path", default="data",action="store") 
-    parser.add_argument("--mPath", dest="model_path", default="model",action="store")
+    parser.add_argument("--mPath", dest="model_path", default="models",action="store")
     parser.add_argument("--restore", dest="restore", default = False,action="store_true")
     parser.add_argument("--nb_epoch", dest="nb_epoch", default = 8, type=int)
     parser.add_argument("--model",default="custModel",choices=["nvidiaModel","custModel"],action="store")
-    parser.add_argument("--rModel",dest="restore_model",default="model/model.json",action="store")
+    parser.add_argument("--rModel",dest="restore_model",default="models/model.json",action="store")
     parser.add_argument("--oModel",dest="output_model",default="model",action="store")
     args = parser.parse_args()
     return args
@@ -59,17 +60,15 @@ def main():
         drive_model = Model(input_shape, args.model).getModel() # Creating model give shape and model. Model1 
         drive_model.compile("adam", "mse")
 
-
+    
     print("Train Model")
+    model_eval = []
     generator = Generator(input_shape,args.data_path)
     for ep in range(args.nb_epoch):
-        gen_train = generator.generate_data()
-        gen_valid = generator.generate_data()
+        gen_train = generator.generate_data(valid = False)
+        gen_valid = generator.generate_data(valid = True)
         hist = drive_model.fit_generator(gen_train,samples_per_epoch = 20000, nb_epoch=1, verbose=1
                                ,validation_data=gen_valid,nb_val_samples=2000)
-
-    with open("{}/{}.json".format(args.model_path,args.output_model), 'w') as outfile:
-        json.dump(drive_model.to_json(), outfile)
         
     drive_model.save_weights("{}/{}.h5".format(args.model_path,args.output_model))
 
